@@ -536,6 +536,46 @@ body {
     border-bottom: 1px solid #e9ecef;
 }
 
+.preview-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.nav-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    min-width: 60px;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#chapter-indicator {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    font-weight: 500;
+    text-align: center;
+    flex: 1;
+}
+
 .preview-story-content h4 {
     font-size: 1rem;
     color: #2c3e50;

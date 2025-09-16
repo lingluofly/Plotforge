@@ -1190,6 +1190,21 @@ class StoryEngine {
             return [];
         }
     }
+    
+    // 获取节点总数
+    getTotalNodesCount() {
+        try {
+            if (!this.nodeTemplates) {
+                // 使用示例节点模板作为后备
+                const exampleTemplates = this.getExampleNodeTemplates();
+                return Object.keys(exampleTemplates).length;
+            }
+            return Object.keys(this.nodeTemplates).length;
+        } catch (error) {
+            console.error('获取节点总数失败:', error);
+            return 15; // 返回一个默认值，基于示例节点模板的数量
+        }
+    }
 
     // 保存故事状态到历史记录
     saveStoryState() {

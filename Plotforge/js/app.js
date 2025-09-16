@@ -1,7 +1,7 @@
 // Plotforge 应用主文件
 
 // 等待DOM加载完成
-document.addEventListener('DOMContentLoaded', async function() {
+    document.addEventListener('DOMContentLoaded', async function() {
     // 获取DOM元素
     const startButton = document.getElementById('start-button');
     const storyIntro = document.getElementById('story-intro');
@@ -13,6 +13,108 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // 初始化故事引擎
     let storyEngine = null;
+    
+    // 历史故事章节数据
+    let storyChapters = [];
+    let currentChapterIndex = 0;
+    
+    // 初始化预览功能
+    initPreviewFunctionality();
+    function initPreviewFunctionality() {
+        const prevBtn = document.getElementById('prev-chapter');
+        const nextBtn = document.getElementById('next-chapter');
+        
+        prevBtn.addEventListener('click', () => navigateChapter(-1));
+        nextBtn.addEventListener('click', () => navigateChapter(1));
+        
+        // 初始加载历史故事
+        loadStoryChapters();
+    }
+    
+    // 加载历史故事章节
+    function loadStoryChapters() {
+        try {
+            // 加载历史数据 - 从localStorage获取
+            const storyHistory = localStorage.getItem('story_history');
+            if (storyHistory) {
+                const history = JSON.parse(storyHistory);
+                storyChapters = history.filter(item => item.content && item.content.trim() !== '');
+                
+                if (storyChapters.length > 0) {
+                    currentChapterIndex = storyChapters.length - 1; // 默认显示最新一章
+                    updateChapterNavigation();
+                    showChapterContent(currentChapterIndex);
+                } else {
+                    updateChapterNavigation();
+                }
+            } else {
+                // 如果没有历史数据，清空章节列表
+                storyChapters = [];
+                updateChapterNavigation();
+            }
+        } catch (error) {
+            console.warn('加载历史故事章节失败:', error);
+            storyChapters = [];
+            updateChapterNavigation();
+        }
+    }
+    
+    // 导航章节
+    function navigateChapter(direction) {
+        const newIndex = currentChapterIndex + direction;
+        if (newIndex >= 0 && newIndex < storyChapters.length) {
+            currentChapterIndex = newIndex;
+            showChapterContent(currentChapterIndex);
+            updateChapterNavigation();
+        }
+    }
+    
+    // 显示章节内容
+    function showChapterContent(index) {
+        const previewElement = document.getElementById('story-preview');
+        if (storyChapters[index]) {
+            const chapter = storyChapters[index];
+            previewElement.innerHTML = `
+                <div class="chapter-content">
+                    <p class="chapter-text">${chapter.content.replace(/\n/g, '<br>')}</p>
+                    ${chapter.choices && chapter.choices.length > 0 ? 
+                        `<div class="chapter-choices">
+                            <strong>选择：</strong>
+                            ${chapter.choices.map(choice => 
+                                `<span class="choice-tag">${choice.text}</span>`
+                            ).join(' ')}
+                         </div>` : ''
+                    }
+                    <div class="chapter-meta">
+                        <small>节点: ${chapter.currentNode || '未知'}</small>
+                        ${chapter.timestamp ? 
+                            `<small>时间: ${new Date(chapter.timestamp).toLocaleString()}</small>` : ''
+                        }
+                    </div>
+                </div>
+            `;
+        } else {
+            previewElement.innerHTML = '<p>暂无故事内容</p>';
+        }
+    }
+    
+    // 更新章节导航状态
+    function updateChapterNavigation() {
+        const prevBtn = document.getElementById('prev-chapter');
+        const nextBtn = document.getElementById('next-chapter');
+        const currentNum = document.getElementById('current-chapter-num');
+        const totalNum = document.getElementById('total-chapters-num');
+        
+        prevBtn.disabled = currentChapterIndex <= 0;
+        nextBtn.disabled = currentChapterIndex >= storyChapters.length - 1;
+        currentNum.textContent = storyChapters.length > 0 ? currentChapterIndex + 1 : 0;
+        totalNum.textContent = storyChapters.length;
+    }
+    
+    // 刷新预览内容（当新内容生成时调用）
+    function refreshPreview() {
+        loadStoryChapters();
+    }
     
     // 检查是否有保存的故事进度
     function checkSavedProgress() {
@@ -245,6 +347,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     updateStoryPreview();
                 }
                 
+                // 初始化调试面板（在应用核心初始化成功后）
+                try {
+                    initDebugPanel();
+                } catch (error) {
+                    console.warn('调试面板初始化失败:', error);
+                }
+                
                 console.log('Plotforge 应用初始化成功');
             } else {
                 contentDisplay.textContent = '抱歉，应用初始化失败，请刷新页面重试。';
@@ -281,6 +390,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (typeof updatePreview === 'function') {
             updatePreview(storyData);
         }
+        
+        // 刷新故事预览内容
+        refreshPreview();
         
         // 自动保存故事状态
         try {
@@ -441,173 +553,198 @@ document.addEventListener('DOMContentLoaded', async function() {
         const previewPanel = document.getElementById('preview-panel');
         const previewContent = document.getElementById('preview-content');
         const currentChapter = document.getElementById('current-chapter');
-        const saveButton = document.getElementById('save-story');
-        const exportButton = document.getElementById('export-story');
-        const historyList = document.getElementById('history-list');
+        const totalChapters = document.getElementById('total-chapters');
+        const currentChapterNum = document.getElementById('current-chapter-num');
+        const totalChaptersNum = document.getElementById('total-chapters-num');
+        const storyPreview = document.getElementById('story-preview');
+        const prevChapterBtn = document.getElementById('prev-chapter');
+        const nextChapterBtn = document.getElementById('next-chapter');
+        const chapterIndicator = document.getElementById('chapter-indicator');
+        const previewActions = document.querySelector('.preview-actions');
+        
+        // 章节历史记录（仅用于保存和加载，不再显示历史列表）
+        let chapterHistory = [];
+        let currentChapterIndex = -1;
+        
+        // 在预览窗口下方添加下载按钮
+        const downloadBtn = document.createElement('button');
+        downloadBtn.id = 'download-story-btn';
+        downloadBtn.className = 'btn-primary';
+        downloadBtn.textContent = '下载故事';
+        downloadBtn.style.margin = '10px 0';
+        downloadBtn.addEventListener('click', window.downloadStory);
+        
+        if (previewActions) {
+            previewActions.appendChild(downloadBtn);
+        } else {
+            console.warn('预览操作区域未找到，无法添加下载按钮');
+        }
         
         // 更新预览窗口内容
-    function updatePreview(storyData) {
-        if (storyData && storyData.content) {
-            previewContent.textContent = storyData.content;
+        function updatePreview(storyData) {
+            if (storyData && storyData.content) {
+                // 添加到章节历史
+                const chapterData = {
+                    content: storyData.content,
+                    timestamp: new Date().toLocaleTimeString(),
+                    node: storyEngine ? storyEngine.currentNode : 'unknown'
+                };
+                
+                chapterHistory.push(chapterData);
+                currentChapterIndex = chapterHistory.length - 1;
+                
+                // 更新故事内容预览
+                updateStoryPreview(chapterData);
+                
+                // 更新进度信息
+                updateProgressInfo();
+                
+                // 更新导航按钮状态
+                updateNavigationButtons();
+            }
+        }
+        
+        // 更新故事内容预览
+        function updateStoryPreview(chapterData) {
+            if (!storyPreview) return;
             
-            // 更新进度信息
+            try {
+                if (chapterData && chapterData.content) {
+                    storyPreview.innerHTML = `<div class="preview-chapter">
+                        <div class="preview-time">${chapterData.timestamp}</div>
+                        <div class="preview-content-text">${chapterData.content}</div>
+                    </div>`;
+                } else {
+                    // 尝试从localStorage获取完整故事
+                    const fullStory = localStorage.getItem('yourstory');
+                    if (fullStory) {
+                        storyPreview.innerHTML = `<div class="preview-chapter">
+                            <div class="preview-content-text">${fullStory}</div>
+                        </div>`;
+                    } else {
+                        storyPreview.innerHTML = '<p>暂无保存的故事内容</p>';
+                    }
+                }
+            } catch (error) {
+                console.warn('更新故事预览失败:', error);
+                storyPreview.innerHTML = '<p>加载预览内容失败</p>';
+            }
+        }
+        
+        // 更新进度信息
+        function updateProgressInfo() {
             if (storyEngine && storyEngine.currentNode) {
                 currentChapter.textContent = `当前节点: ${storyEngine.currentNode}`;
             }
             
-            // 更新历史记录
-            updateHistoryList();
-            
-            // 更新故事内容预览
-            updateStoryPreview();
+            if (chapterHistory.length > 0) {
+                // 显示章节进度
+                currentChapterNum.textContent = currentChapterIndex + 1;
+                totalChaptersNum.textContent = chapterHistory.length;
+                
+                // 将进度与节点数绑定
+                try {
+                    if (storyEngine) {
+                        // 获取访问过的唯一节点数
+                        const visitedNodes = new Set();
+                        chapterHistory.forEach(chapter => {
+                            if (chapter.node) {
+                                visitedNodes.add(chapter.node);
+                            }
+                        });
+                        
+                        // 获取总节点数
+                        const totalNodes = storyEngine.getTotalNodesCount();
+                        const visitedNodesCount = visitedNodes.size;
+                        
+                        // 计算进度百分比
+                        const progressPercentage = Math.min(Math.round((visitedNodesCount / totalNodes) * 100), 100);
+                        
+                        // 更新进度显示
+                        totalChapters.textContent = `总章节: ${chapterHistory.length} | 进度: ${visitedNodesCount}/${totalNodes} (${progressPercentage}%)`;
+                    } else {
+                        // 回退到原始显示
+                        totalChapters.textContent = `总章节: ${chapterHistory.length}`;
+                    }
+                } catch (error) {
+                    console.warn('更新节点进度失败:', error);
+                    // 发生错误时回退到原始显示
+                    totalChapters.textContent = `总章节: ${chapterHistory.length}`;
+                }
+            } else {
+                currentChapterNum.textContent = '0';
+                totalChaptersNum.textContent = '0';
+                totalChapters.textContent = '总章节: 0 | 进度: 0%';
+            }
         }
-    }
-    
-    // 更新故事内容预览
-    function updateStoryPreview() {
-        const storyPreview = document.getElementById('story-preview');
-        if (!storyPreview) return;
         
+        // 更新导航按钮状态
+        function updateNavigationButtons() {
+            prevChapterBtn.disabled = currentChapterIndex <= 0;
+            nextChapterBtn.disabled = currentChapterIndex >= chapterHistory.length - 1;
+        }
+        
+        // 章节导航事件
+        prevChapterBtn.addEventListener('click', () => {
+            if (currentChapterIndex > 0) {
+                currentChapterIndex--;
+                updateStoryPreview(chapterHistory[currentChapterIndex]);
+                updateNavigationButtons();
+            }
+        });
+        
+        nextChapterBtn.addEventListener('click', () => {
+            if (currentChapterIndex < chapterHistory.length - 1) {
+                currentChapterIndex++;
+                updateStoryPreview(chapterHistory[currentChapterIndex]);
+                updateNavigationButtons();
+            }
+        });
+        
+        // 更新历史记录（仅用于数据维护，不再显示UI）
+        function updateHistoryList() {
+            // 不再更新UI显示，仅维护历史记录数据
+        }
+        
+        // 初始更新
+        updateProgressInfo();
+        updateNavigationButtons();
+        
+        // 尝试加载已有的故事内容
         try {
             const savedState = localStorage.getItem('plotforgeStoryState');
             if (savedState) {
                 const state = JSON.parse(savedState);
                 if (state && state.storyState && state.storyState.history) {
-                    // 获取最新的故事内容
-                    const latestHistory = state.storyState.history.slice(-1)[0];
-                    if (latestHistory && latestHistory.content) {
-                        storyPreview.textContent = latestHistory.content;
-                        return;
+                    // 从保存的状态中恢复章节历史
+                    state.storyState.history.forEach(item => {
+                        if (item.content) {
+                            chapterHistory.push({
+                                content: item.content,
+                                timestamp: item.timestamp || new Date().toLocaleTimeString(),
+                                node: item.node || 'saved'
+                            });
+                        }
+                    });
+                    
+                    if (chapterHistory.length > 0) {
+                        currentChapterIndex = chapterHistory.length - 1;
+                        updateStoryPreview(chapterHistory[currentChapterIndex]);
                     }
                 }
             }
-            
-            // 如果没有保存的内容，显示默认提示
-            storyPreview.textContent = '暂无保存的故事内容';
         } catch (error) {
-            console.warn('更新故事预览失败:', error);
-            storyPreview.textContent = '加载预览内容失败';
+            console.warn('加载保存的故事状态失败:', error);
         }
     }
-        
-        // 更新历史记录列表
-        function updateHistoryList() {
-            historyList.innerHTML = '';
-            
-            // 获取历史记录
-            const history = storyEngine ? storyEngine.getStoryHistory() : [];
-            
-            if (history.length === 0) {
-                const emptyItem = document.createElement('li');
-                emptyItem.textContent = '暂无历史记录';
-                emptyItem.className = 'history-empty';
-                historyList.appendChild(emptyItem);
-                return;
-            }
-            
-            // 显示最近10条历史记录
-            history.slice(-10).forEach((item, index) => {
-                const listItem = document.createElement('li');
-                listItem.className = 'history-item';
-                
-                const timeSpan = document.createElement('span');
-                timeSpan.className = 'history-time';
-                timeSpan.textContent = item.time || `节点 ${index + 1}`;
-                
-                const contentSpan = document.createElement('span');
-                contentSpan.className = 'history-content';
-                contentSpan.textContent = item.content ? 
-                    (item.content.length > 50 ? item.content.substring(0, 50) + '...' : item.content) : 
-                    '无内容';
-                
-                listItem.appendChild(timeSpan);
-                listItem.appendChild(contentSpan);
-                historyList.appendChild(listItem);
-            });
-        }
-        
-        // 保存故事到本地文件
-        saveButton.addEventListener('click', function() {
-            try {
-                const storyState = storyEngine ? storyEngine.getStoryState() : null;
-                if (storyState) {
-                    const blob = new Blob([JSON.stringify(storyState, null, 2)], { type: 'application/json' });
-                    const url = URL.createObjectURL(blob);
-                    
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'story.json';
-                    document.body.appendChild(a);
-                    a.click();
-                    
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                    
-                    // 显示保存成功提示
-                    showSaveSuccess();
-                    console.log('故事已保存到 story.json');
-                } else {
-                    console.warn('没有故事状态可保存');
-                }
-            } catch (error) {
-                console.error('保存故事失败:', error);
-            }
-        });
-        
-        // 导出故事为文本文件
-        exportButton.addEventListener('click', function() {
-            try {
-                const fullStory = storyEngine ? storyEngine.exportFullStory() : '没有故事内容';
-                const blob = new Blob([fullStory], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'yourstory.txt';
-                document.body.appendChild(a);
-                a.click();
-                
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                
-                console.log('故事已导出到 yourstory.txt');
-            } catch (error) {
-                console.error('导出故事失败:', error);
-            }
-        });
-        
         // 显示保存成功提示
         function showSaveSuccess() {
-            const successMsg = document.createElement('div');
-            successMsg.className = 'save-success';
-            successMsg.textContent = '✓ 故事已保存到 story.json';
-            successMsg.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #4CAF50;
-                color: white;
-                padding: 10px 20px;
-                border-radius: 5px;
-                z-index: 1000;
-                animation: fadeInOut 3s ease-in-out;
-            `;
-            
-            document.body.appendChild(successMsg);
-            
-            setTimeout(() => {
-                if (document.body.contains(successMsg)) {
-                    document.body.removeChild(successMsg);
-                }
-            }, 3000);
+            // 保留函数但不再使用
         }
         
-        // 初始更新
-        updatePreview(null);
-    }
-    
     // 初始化调试窗口
     function initDebugPanel() {
+
         const debugPanel = document.getElementById('debug-panel');
         const debugContent = document.getElementById('debug-content');
         const toggleButton = document.getElementById('toggle-debug');
@@ -725,17 +862,75 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (apiKey) {
                 config.ai.apiKey = apiKey;
             } else {
-                // 提示用户输入API密钥
-                const userInput = prompt('请输入你的qwen-plus API密钥以使用AI生成功能：');
-                if (userInput) {
-                    config.ai.apiKey = userInput;
-                    localStorage.setItem('qwenApiKey', userInput);
-                }
+                // 使用更友好的方式提示用户输入API密钥
+                const apiKeyModal = document.createElement('div');
+                apiKeyModal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 9999;
+                `;
+                
+                const apiKeyForm = document.createElement('div');
+                apiKeyForm.style.cssText = `
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    width: 300px;
+                    text-align: center;
+                `;
+                
+                apiKeyForm.innerHTML = `
+                    <h3>API密钥设置</h3>
+                    <p>请输入你的qwen-plus API密钥以使用AI生成功能：</p>
+                    <input type="password" id="api-key-input" style="width: 90%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px;">
+                    <div style="margin-top: 15px;">
+                        <button id="api-key-submit" style="padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">确认</button>
+                        <button id="api-key-skip" style="padding: 8px 16px; margin-left: 10px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">跳过</button>
+                    </div>
+                `;
+                
+                apiKeyModal.appendChild(apiKeyForm);
+                document.body.appendChild(apiKeyModal);
+                
+                const apiKeyInput = document.getElementById('api-key-input');
+                const submitBtn = document.getElementById('api-key-submit');
+                const skipBtn = document.getElementById('api-key-skip');
+                
+                submitBtn.addEventListener('click', function() {
+                    const key = apiKeyInput.value.trim();
+                    if (key) {
+                        config.ai.apiKey = key;
+                        localStorage.setItem('qwenApiKey', key);
+                        document.body.removeChild(apiKeyModal);
+                    } else {
+                        alert('请输入有效的API密钥');
+                    }
+                });
+                
+                skipBtn.addEventListener('click', function() {
+                    document.body.removeChild(apiKeyModal);
+                    console.log('用户选择跳过API密钥设置');
+                });
+                
+                // 自动聚焦到输入框
+                setTimeout(() => {
+                    apiKeyInput.focus();
+                }, 100);
             }
         }
     }
     
-    // 初始化应用
+    // 初始化核心应用
+    await initApp();
+    
+    // 添加其他功能
     addApiKeyInput();
     addKeyboardShortcuts();
     
@@ -744,13 +939,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         initPreviewPanel();
     } catch (error) {
         console.warn('预览面板初始化失败:', error);
-    }
-    
-    // 尝试初始化调试面板
-    try {
-        initDebugPanel();
-    } catch (error) {
-        console.warn('调试面板初始化失败:', error);
     }
 
     // 全局调试面板切换函数
@@ -784,16 +972,44 @@ document.addEventListener('DOMContentLoaded', async function() {
         }, 1000);
     });
     
-    await initApp();
+
+    
 });
 
 // 错误处理
-window.addEventListener('error', function(e) {
-    console.error('应用错误:', e.error);
-    alert('应用运行时发生错误，请刷新页面重试。\n错误信息：' + e.error.message);
-});
+    window.addEventListener('error', function(e) {
+        console.error('应用错误:', e.error);
+        alert('应用运行时发生错误，请刷新页面重试。\n错误信息：' + e.error.message);
+    });
 
-window.addEventListener('unhandledrejection', function(e) {
-    console.error('未处理的Promise错误:', e.reason);
-    alert('应用运行时发生错误，请刷新页面重试。\n错误信息：' + e.reason.message);
-});
+    // 全局下载故事函数
+    window.downloadStory = function() {
+        try {
+            // 尝试从localStorage获取故事内容
+            const storyContent = localStorage.getItem('yourstory') || '没有找到故事内容';
+            const blob = new Blob([storyContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'yourstory.txt';
+            document.body.appendChild(a);
+            a.click();
+            
+            // 清理
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+            
+            console.log('故事内容已下载到 yourstory.txt');
+        } catch (error) {
+            console.error('下载故事内容失败:', error);
+            alert('下载故事内容失败，请重试。\n错误信息：' + error.message);
+        }
+    };
+
+    window.addEventListener('unhandledrejection', function(e) {
+        console.error('未处理的Promise错误:', e.reason);
+        alert('应用运行时发生错误，请刷新页面重试。\n错误信息：' + e.reason.message);
+    });

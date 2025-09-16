@@ -27,19 +27,17 @@
                     </div>
                     <div class="preview-story-content">
                         <h4>故事内容预览</h4>
+                        <div class="preview-controls">
+                            <button id="prev-chapter" class="nav-btn" disabled>上一章</button>
+                            <span id="chapter-indicator">第 <span id="current-chapter-num">0</span> 章 / 共 <span id="total-chapters-num">0</span> 章</span>
+                            <button id="next-chapter" class="nav-btn" disabled>下一章</button>
+                        </div>
                         <div id="story-preview" class="story-preview">
                             <p>暂无保存的故事内容</p>
                         </div>
                     </div>
                     <div class="preview-actions">
-                        <button id="save-story" class="btn-secondary">保存故事</button>
-                        <button id="export-story" class="btn-secondary">导出故事</button>
-                    </div>
-                    <div class="preview-history">
-                        <h4>历史记录</h4>
-                        <div id="history-list" class="history-list">
-                            <!-- 历史记录将在这里显示 -->
-                        </div>
+                        <!-- 下载按钮将通过JavaScript添加到这里 -->
                     </div>
                 </div>
             </div>
