@@ -1,0 +1,550 @@
+{
+    "start": {
+        "id": "start",
+        "description": "故事开始，主角在旧书店发现神秘书籍",
+        "content": "一个平凡的周末，你在旧书店里闲逛。书架的角落，一本看起来有些年头的书引起了你的注意。书的封面是深棕色的，上面有着奇怪的符号。你好奇地翻开了它，里面的文字似乎在微微发光，当你的手指触碰到书页时，一种奇怪的感觉涌上心头...",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "read_more",
+                "text": "继续阅读这本书，想要了解其中的秘密",
+                "nextNode": "strange_occurrence",
+                "effects": {"curiosity": 1, "progress": 1}
+            },
+            {
+                "id": "put_back",
+                "text": "将书放回书架，觉得还是不要招惹麻烦比较好",
+                "nextNode": "alternative_path",
+                "effects": {"caution": 1}
+            }
+        ],
+        "fallbackContent": "你在书店里发现了一本神秘的书..."
+    },
+    "strange_occurrence": {
+        "id": "strange_occurrence",
+        "description": "奇怪的事情发生了，书本发光，周围环境变化",
+        "content": "当你继续阅读时，书本突然发出强烈的蓝光，你感到一阵眩晕。当你恢复意识时，发现书店的环境已经完全变了样。书架上的书籍漂浮在空中，墙壁上出现了奇异的符文，窗外的街道变成了一片森林。你意识到自己可能进入了另一个世界。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "investigate",
+                "text": "勇敢地调查这个奇怪的现象，想要一探究竟",
+                "nextNode": "mystery_deepens",
+                "effects": {"courage": 1, "progress": 1}
+            },
+            {
+                "id": "escape",
+                "text": "感到害怕，放下书，快速离开书店",
+                "nextNode": "safe_path",
+                "effects": {"fear": 1}
+            }
+        ],
+        "fallbackContent": "当你继续阅读时，突然感到周围的环境发生了变化..."
+    },
+    "alternative_path": {
+        "id": "alternative_path",
+        "description": "另一条道路，主角选择了平凡的生活",
+        "content": "你将书放回书架，深呼吸了几次，决定离开这个可能带来麻烦的地方。你走出书店，阳光照在脸上，让你感到一阵安心。但在你的内心深处，总有一个声音在告诉你，你错过了什么重要的东西。回家的路上，你不断地回头看向那家旧书店。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "return_bookstore",
+                "text": "心中始终有个声音在呼唤，决定返回书店查看那本书",
+                "nextNode": "strange_occurrence",
+                "effects": {"regret": 1, "progress": 1}
+            },
+            {
+                "id": "continue_away",
+                "text": "说服自己那只是本普通的书，继续过平凡的生活",
+                "nextNode": "normal_life",
+                "effects": {"relief": 1}
+            }
+        ],
+        "fallbackContent": "你决定离开书店，但心中总有一丝好奇..."
+    },
+    "mystery_deepens": {
+        "id": "mystery_deepens",
+        "description": "谜团加深，主角发现自己进入了另一个世界",
+        "content": "你鼓起勇气，在这个变了样的书店里探索。漂浮的书籍中，有一本特别引起了你的注意——它的封面上有和你刚才阅读的那本书一样的符号。当你伸手去拿它时，一个声音突然在你脑海中响起：'欢迎来到魔法世界，被选中的人'。你环顾四周，试图找到声音的来源。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "seek_help",
+                "text": "寻找知道内情的人，希望得到帮助",
+                "nextNode": "meet_guide",
+                "effects": {"wisdom": 1, "progress": 1}
+            },
+            {
+                "id": "explore_alone",
+                "text": "决定独自探索这个神秘世界，相信自己的能力",
+                "nextNode": "dangerous_path",
+                "effects": {"recklessness": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你决定深入调查这个神秘的现象..."
+    },
+    "safe_path": {
+        "id": "safe_path",
+        "description": "安全的道路，但主角内心仍有挣扎",
+        "content": "你快速离开了书店，心跳得很快。当你回头看时，书店的外观并没有什么变化，但你知道里面发生了不寻常的事情。你走在熟悉的街道上，但感觉一切都变得陌生了。你的脑海中不断闪现着那本发光的书和变了样的书店。你开始质疑自己的决定是否正确。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "rethink",
+                "text": "开始反思自己的决定，也许这是改变命运的机会",
+                "nextNode": "mystery_deepens",
+                "effects": {"determination": 1, "progress": 1}
+            },
+            {
+                "id": "forget",
+                "text": "强迫自己忘记这次奇怪的经历，回归正常生活",
+                "nextNode": "normal_life",
+                "effects": {"closure": 1}
+            }
+        ],
+        "fallbackContent": "你逃离了书店，但好奇心仍在心中萦绕..."
+    },
+    "meet_guide": {
+        "id": "meet_guide",
+        "description": "遇到神秘向导，了解自己的使命",
+        "content": "你在书店外的街道上徘徊，寻找着任何可能帮助你的人。突然，一位穿着长袍的老人出现在你面前，他的眼睛里闪烁着智慧的光芒。'我一直在等你，被选中的人，'他说，'那本书是打开魔法世界的钥匙，而你注定要保护它。'老人自我介绍为艾德里安，是魔法世界的守护者。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "trust_guide",
+                "text": "选择相信这个神秘的向导，跟随他学习",
+                "nextNode": "adventure_begins",
+                "effects": {"trust": 1, "progress": 1}
+            },
+            {
+                "id": "doubt_guide",
+                "text": "对向导保持怀疑，想要验证他的身份和目的",
+                "nextNode": "test_guide",
+                "effects": {"caution": 1}
+            }
+        ],
+        "fallbackContent": "你遇到了一位自称了解这一切的神秘向导..."
+    },
+    "dangerous_path": {
+        "id": "dangerous_path",
+        "description": "危险的道路，主角独自面对挑战",
+        "content": "你决定独自探索这个神秘的世界。离开书店后，你发现自己来到了一个陌生的森林中。树木高耸入云，树叶发出微弱的光芒。突然，一只巨大的野兽从灌木丛中跳出，它的眼睛里闪烁着红色的光芒，显然不怀好意。你必须快速做出反应。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "face_danger",
+                "text": "直面危险，相信自己能够克服困难",
+                "nextNode": "trial_by_fire",
+                "effects": {"bravery": 1, "progress": 1}
+            },
+            {
+                "id": "retreat",
+                "text": "意识到自己的不足，决定撤退并寻找帮助",
+                "nextNode": "meet_guide",
+                "effects": {"humility": 1}
+            }
+        ],
+        "fallbackContent": "独自探索的你遇到了意想不到的危险..."
+    },
+    "test_guide": {
+        "id": "test_guide",
+        "description": "测试向导的真心，建立信任",
+        "content": "你对艾德里安的话保持怀疑，要求他证明自己的身份。老人微笑着点了点头，然后挥了挥手。一棵枯树立刻变得枝繁叶茂，花朵在瞬间绽放。'这只是小把戏，'他说，'如果你跟随我，我会教你更多。但首先，你必须相信我。'",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "accept_truth",
+                "text": "向导通过了考验，决定接受他的帮助",
+                "nextNode": "adventure_begins",
+                "effects": {"trust": 1, "progress": 1}
+            },
+            {
+                "id": "reject_help",
+                "text": "仍然不信任向导，决定继续独自行动",
+                "nextNode": "dangerous_path",
+                "effects": {"independence": 1}
+            }
+        ],
+        "fallbackContent": "你决定考验这位神秘向导的真心..."
+    },
+    "adventure_begins": {
+        "id": "adventure_begins",
+        "description": "冒险正式开始，主角踏上使命之旅",
+        "content": "在艾德里安的引导下，你来到了魔法学院的入口。这座古老的建筑隐藏在时空裂隙中，只有被选中的人才能看见。艾德里安告诉你，暗影使者正在寻找那本神秘的书，他想要用书中的力量打开所有维度的大门，释放出古老的邪恶。你的使命是阻止他，但首先，你需要变得更加强大。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "main_quest",
+                "text": "接受主线任务，直接前往阻止暗影使者",
+                "nextNode": "main_quest_start",
+                "effects": {"purpose": 1, "progress": 1}
+            },
+            {
+                "id": "side_quest",
+                "text": "先完成一些支线任务，提升自己的能力",
+                "nextNode": "side_quest_start",
+                "effects": {"exploration": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "在向导的帮助下，你的冒险正式开始了..."
+    },
+    "main_quest_start": {
+        "id": "main_quest_start",
+        "description": "主线任务开始，主角前往关键地点",
+        "content": "你决定直接面对暗影使者。根据艾德里安的情报，他正在水晶洞穴中寻找另一把开启维度大门的钥匙。你穿越时空裂隙，来到了这个神秘的地方。洞穴内的墙壁上镶嵌着无数发光的水晶，空气中弥漫着强大的魔法能量。你能感觉到，暗影使者就在不远处。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "quick_approach",
+                "text": "快速接近目标，希望出其不意",
+                "nextNode": "confrontation",
+                "effects": {"urgency": 1, "progress": 1}
+            },
+            {
+                "id": "careful_prep",
+                "text": "仔细准备，制定详细计划后行动",
+                "nextNode": "preparation",
+                "effects": {"strategy": 1}
+            }
+        ],
+        "fallbackContent": "你开始了阻止暗影使者的主线任务..."
+    },
+    "side_quest_start": {
+        "id": "side_quest_start",
+        "description": "支线任务开始，主角提升自己",
+        "content": "你决定先提升自己的能力，为即将到来的战斗做准备。艾德里安建议你完成两个重要的支线任务：一是前往精灵王国学习基础魔法，二是寻找志同道合的盟友。这两个任务都能帮助你在与暗影使者的最终决战中获得优势。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "learn_magic",
+                "text": "学习魔法技能，增强自己的实力",
+                "nextNode": "magic_training",
+                "effects": {"power": 1, "progress": 1}
+            },
+            {
+                "id": "find_allies",
+                "text": "寻找盟友，增加成功的机会",
+                "nextNode": "ally_recruitment",
+                "effects": {"teamwork": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你决定先完成一些支线任务来提升自己..."
+    },
+    "normal_life": {
+        "id": "normal_life",
+        "description": "平凡的生活，但主角内心仍有遗憾",
+        "content": "你回到了平凡的生活，试图忘记那次奇怪的经历。日子一天天过去，你找到了稳定的工作，结交了新朋友，生活看似平静而美好。但每当夜深人静时，你总会想起那本发光的书和那个神秘的声音。你不禁会想，如果当初做出不同的选择，现在的生活会是什么样子？",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "end_story",
+                "text": "接受平凡的生活，结束这个故事",
+                "nextNode": "story_end",
+                "effects": {"acceptance": 1}
+            },
+            {
+                "id": "restart",
+                "text": "无法释怀，决定重新开始一段新的冒险",
+                "nextNode": "start",
+                "effects": {"new_beginning": 1}
+            }
+        ],
+        "fallbackContent": "你回到了平凡的生活，但有时会想起那段奇怪的经历..."
+    },
+    "story_end": {
+        "id": "story_end",
+        "description": "故事结束",
+        "content": "故事到此结束。无论你选择了怎样的道路，这段经历都将成为你生命中重要的一部分。每个选择都塑造了独特的你，每个结局都是精彩的旅程。感谢你体验这段冒险！",
+        "requiresAI": true,
+        "choices": [],
+        "fallbackContent": "故事结束。感谢你的阅读！"
+    },
+    "trial_by_fire": {
+        "id": "trial_by_fire",
+        "description": "主角在危险中成长",
+        "content": "面对巨大的野兽，你没有退缩。你想起了那本神秘的书，想起了它发光的页面。突然，一种力量从你体内涌现，你抬起手，一道蓝光从掌心射出，击中了野兽。野兽痛苦地嚎叫着，然后消失在一阵烟雾中。你惊讶地看着自己的手，意识到自己可能拥有某种特殊的能力。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "embrace_power",
+                "text": "接受自己的特殊能力，继续冒险",
+                "nextNode": "adventure_begins",
+                "effects": {"self_acceptance": 1, "progress": 1}
+            },
+            {
+                "id": "fear_power",
+                "text": "对自己的能力感到恐惧，想要回到平凡生活",
+                "nextNode": "normal_life",
+                "effects": {"fear": 1}
+            }
+        ],
+        "fallbackContent": "你成功地克服了这次危险，但也发现了自己的特殊能力..."
+    },
+    "preparation": {
+        "id": "preparation",
+        "description": "主角为最终决战做准备",
+        "content": "你决定谨慎行事，先在水晶洞穴外观察暗影使者的动向。通过水晶的反光，你看到他正在与一个黑暗生物交谈。'只要拿到那本书，我们就能统治所有维度，'暗影使者说。你握紧了手中的魔法水晶，这是艾德里安给你的护身符。你知道，现在是行动的时候了，但你需要找到最佳时机。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "wait_attack",
+                "text": "等待暗影使者与黑暗生物分开后再攻击",
+                "nextNode": "sneak_attack",
+                "effects": {"patience": 1, "progress": 1}
+            },
+            {
+                "id": "direct_confront",
+                "text": "直接冲进去，与暗影使者正面交锋",
+                "nextNode": "confrontation",
+                "effects": {"bravery": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你在为与暗影使者的最终决战做准备..."
+    },
+    "confrontation": {
+        "id": "confrontation",
+        "description": "主角与暗影使者的最终对决",
+        "content": "你冲进洞穴，大声喝止暗影使者。他转过身来，露出了狰狞的笑容。'你终于来了，被选中的人，'他冷笑着说，'但你来得太晚了，我已经拿到了钥匙。'他举起手中的水晶钥匙，准备与你的书结合。你必须在他完成仪式前阻止他！",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "use_magic",
+                "text": "使用你的魔法能力攻击暗影使者",
+                "nextNode": "final_battle",
+                "effects": {"power": 1, "progress": 1}
+            },
+            {
+                "id": "negotiate",
+                "text": "尝试说服暗影使者放弃他的计划",
+                "nextNode": "shadow_backstory",
+                "effects": {"wisdom": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你与暗影使者面对面，一场决战即将开始..."
+    },
+    "magic_training": {
+        "id": "magic_training",
+        "description": "主角在精灵王国学习魔法",
+        "content": "在艾德里安的引导下，你来到了精灵王国。这里的一切都充满了魔法能量，树木会说话，花朵会唱歌。精灵女王亲自教导你基础的魔法知识，她告诉你，每个人都有自己独特的魔法属性，而你的属性是光系，正好克制暗影使者的黑暗魔法。通过几天的训练，你已经能够熟练地操控魔法能量了。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "master_spells",
+                "text": "继续深入学习高级魔法咒语",
+                "nextNode": "advanced_training",
+                "effects": {"power": 2, "progress": 1}
+            },
+            {
+                "id": "return_quest",
+                "text": "觉得自己已经准备好，可以去完成主线任务了",
+                "nextNode": "main_quest_start",
+                "effects": {"confidence": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你在精灵王国接受魔法训练..."
+    },
+    "ally_recruitment": {
+        "id": "ally_recruitment",
+        "description": "主角寻找志同道合的盟友",
+        "content": "你开始在各个维度寻找盟友。在古老的图书馆里，你遇到了一位名叫莉娜的历史学家，她对维度之间的通道有着深入的研究。在元素领域，你结识了火元素使者卡尔，他痛恨暗影使者破坏了元素平衡。这两位新盟友都愿意帮助你阻止暗影使者的邪恶计划。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "more_allies",
+                "text": "继续寻找更多的盟友",
+                "nextNode": "ally_quest",
+                "effects": {"teamwork": 2, "progress": 1}
+            },
+            {
+                "id": "ready_quest",
+                "text": "觉得现有盟友已经足够，可以开始主线任务了",
+                "nextNode": "main_quest_start",
+                "effects": {"teamwork": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你在寻找志同道合的盟友..."
+    },
+    "sneak_attack": {
+        "id": "sneak_attack",
+        "description": "主角偷袭暗影使者",
+        "content": "你耐心地等待着，终于等到了暗影使者与黑暗生物分开的机会。你悄无声息地靠近他，然后突然发动攻击。一道强光从你的手中射出，击中了暗影使者的后背。他痛苦地尖叫着，手中的水晶钥匙掉落在地。你迅速捡起钥匙，准备离开洞穴。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "escape_cave",
+                "text": "带着钥匙迅速逃离洞穴",
+                "nextNode": "victory_escape",
+                "effects": {"success": 1, "progress": 1}
+            },
+            {
+                "id": "finish_fight",
+                "text": "趁胜追击，彻底击败暗影使者",
+                "nextNode": "final_battle",
+                "effects": {"determination": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你成功地偷袭了暗影使者..."
+    },
+    "shadow_backstory": {
+        "id": "shadow_backstory",
+        "description": "暗影使者揭示自己的过去",
+        "content": "你试图说服暗影使者放弃他的计划。出乎意料的是，他并没有立刻攻击你，而是开始讲述自己的故事。原来，他曾经是魔法世界的守护者，和艾德里安是朋友。但在一次任务中，他失去了家人，从此对这个世界充满了怨恨。他认为只有通过统治所有维度，才能真正保护自己所爱的人。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "empathize",
+                "text": "理解并同情他的遭遇，试图引导他走向光明",
+                "nextNode": "redemption",
+                "effects": {"compassion": 1, "progress": 1}
+            },
+            {
+                "id": "reject_story",
+                "text": "不认同他的做法，坚持要阻止他",
+                "nextNode": "final_battle",
+                "effects": {"justice": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "暗影使者向你讲述了他的过去..."
+    },
+    "final_battle": {
+        "id": "final_battle",
+        "description": "最后的决战",
+        "content": "一场激烈的战斗在水晶洞穴中展开。暗影使者释放出强大的黑暗能量，而你则用光明魔法与之对抗。整个洞穴都在颤抖，水晶纷纷碎裂。你能感觉到自己的力量在不断增强，仿佛有某种古老的力量在支持着你。最终，你释放出了全力一击，将暗影使者击倒在地。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "spare_shadow",
+                "text": "放暗影使者一条生路，希望他能改过自新",
+                "nextNode": "mercy_ending",
+                "effects": {"mercy": 1, "progress": 1}
+            },
+            {
+                "id": "defeat_shadow",
+                "text": "彻底击败暗影使者，确保他不能再危害世界",
+                "nextNode": "heroic_ending",
+                "effects": {"victory": 1, "progress": 1}
+            }
+        ],
+        "fallbackContent": "一场激烈的最终决战正在进行..."
+    },
+    "advanced_training": {
+        "id": "advanced_training",
+        "description": "主角学习高级魔法",
+        "content": "在精灵女王的指导下，你开始学习高级魔法咒语。这些咒语需要强大的意志力和精准的控制力，但你很快就掌握了它们。精灵女王对你的进步感到惊讶，她告诉你，你是她见过的最有天赋的魔法师之一。现在，你已经准备好面对任何挑战了。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "complete_training",
+                "text": "完成高级魔法训练，回到主线任务",
+                "nextNode": "main_quest_start",
+                "effects": {"power": 3, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你在学习高级魔法咒语..."
+    },
+    "ally_quest": {
+        "id": "ally_quest",
+        "description": "主角找到更多盟友",
+        "content": "你继续寻找盟友，来到了一个叫做雾之谷的地方。在这里，你遇到了一位神秘的预言师，她能看到未来的片段。她告诉了你关于这场战斗的重要信息，并愿意加入你的队伍。现在，你的团队已经有四位成员了，每个人都有自己独特的技能和背景。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "team_complete",
+                "text": "觉得团队已经足够强大，可以开始主线任务了",
+                "nextNode": "main_quest_start",
+                "effects": {"teamwork": 3, "progress": 1}
+            }
+        ],
+        "fallbackContent": "你找到了更多的盟友..."
+    },
+    "victory_escape": {
+        "id": "victory_escape",
+        "description": "主角成功逃脱并获得胜利",
+        "content": "你带着水晶钥匙成功逃离了洞穴。暗影使者在后面愤怒地追赶，但你利用魔法创造了一个传送门，回到了魔法学院。艾德里安对你的成功表示祝贺，他说有了这把钥匙和那本书，暗影使者就无法打开维度大门了。你拯救了所有的维度，成为了英雄。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "end_adventure",
+                "text": "结束这次冒险，成为魔法世界的守护者",
+                "nextNode": "guardian_ending",
+                "effects": {"fulfillment": 1}
+            }
+        ],
+        "fallbackContent": "你成功逃脱并获得了胜利..."
+    },
+    "redemption": {
+        "id": "redemption",
+        "description": "暗影使者寻求救赎",
+        "content": "你的同情和理解打动了暗影使者。他流下了悔恨的泪水，承认自己的做法是错误的。他愿意交出水晶钥匙，并帮助你们修复被他破坏的一切。艾德里安也原谅了他，说每个人都有改过自新的机会。最终，暗影使者决定用自己的力量保护这个世界，弥补自己的过错。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "accept_redemption",
+                "text": "接受暗影使者的救赎，一起守护世界",
+                "nextNode": "peaceful_ending",
+                "effects": {"forgiveness": 1}
+            }
+        ],
+        "fallbackContent": "暗影使者决定寻求救赎..."
+    },
+    "mercy_ending": {
+        "id": "mercy_ending",
+        "description": "主角选择宽恕，获得美好的结局",
+        "content": "你选择放暗影使者一条生路。他惊讶地看着你，然后默默地离开了。你将水晶钥匙和神秘书籍交给了艾德里安，他们会妥善保管这些强大的物品。在返回人类世界之前，精灵女王授予了你'光明使者'的称号。你知道，虽然冒险结束了，但你的使命才刚刚开始。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "conclude_story",
+                "text": "故事结束，返回人类世界",
+                "nextNode": "story_end",
+                "effects": {"closure": 1}
+            }
+        ],
+        "fallbackContent": "你选择了宽恕，获得了一个美好的结局..."
+    },
+    "heroic_ending": {
+        "id": "heroic_ending",
+        "description": "主角成为真正的英雄",
+        "content": "你彻底击败了暗影使者，确保他不能再危害世界。魔法世界的居民都为你的胜利欢呼，他们将你视为救世主。艾德里安邀请你成为魔法学院的永久教师，教授新一代魔法师。虽然你想念人类世界的生活，但你知道这里有更重要的事情等着你去做。你决定留在魔法世界，成为一名真正的英雄。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "hero_conclude",
+                "text": "故事结束，你成为了魔法世界的英雄",
+                "nextNode": "story_end",
+                "effects": {"glory": 1}
+            }
+        ],
+        "fallbackContent": "你成为了真正的英雄..."
+    },
+    "guardian_ending": {
+        "id": "guardian_ending",
+        "description": "主角成为魔法世界的守护者",
+        "content": "你决定留在魔法世界，成为一名守护者。在艾德里安的指导下，你学习了更多关于维度之间平衡的知识。你经常穿梭于各个维度之间，确保它们的安全与和谐。虽然你偶尔会想念人类世界的生活，但你知道自己的选择是正确的。你找到了属于自己的使命和归属感。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "guardian_conclude",
+                "text": "故事结束，你找到了自己的使命",
+                "nextNode": "story_end",
+                "effects": {"purpose": 1}
+            }
+        ],
+        "fallbackContent": "你成为了魔法世界的守护者..."
+    },
+    "peaceful_ending": {
+        "id": "peaceful_ending",
+        "description": "和平解决冲突，所有人获得救赎",
+        "content": "在你的努力下，暗影使者获得了救赎，所有维度的平衡也得到了恢复。魔法世界和人类世界之间建立了友好的联系，两个世界的居民可以自由往来。你成为了两个世界之间的桥梁，促进了不同文化之间的交流和理解。这是一个真正的和平结局，所有人都从中获得了成长。",
+        "requiresAI": true,
+        "choices": [
+            {
+                "id": "peace_conclude",
+                "text": "故事结束，世界迎来和平",
+                "nextNode": "story_end",
+                "effects": {"harmony": 1}
+            }
+        ],
+        "fallbackContent": "世界迎来了和平..."
+    }
+}

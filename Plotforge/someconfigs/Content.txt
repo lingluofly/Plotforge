@@ -1,0 +1,83 @@
+{
+    "rich": {
+        "format": "detailed",
+        "length": "medium",
+        "style": "descriptive",
+        "paragraphCount": 3-5,
+        "sentenceLength": "medium",
+        "dialogueIncluded": true,
+        "descriptionLevel": "high",
+        "emotionalDepth": "high",
+        "pace": "medium",
+        "vocabularyLevel": "rich",
+        "examples": [
+            "阳光透过古老的百叶窗，在布满灰尘的地板上投下斑驳的光影。你小心翼翼地迈出一步，木地板发出低沉的吱呀声，在寂静的房间里显得格外清晰。书架上的古籍散发着陈旧的气息，仿佛在诉说着被遗忘的故事。突然，你注意到墙角的一个木盒，它的表面刻着与你在旧书店里发现的那本书上相同的符号...",
+            "梅林的眼睛里闪烁着智慧的光芒，他用苍老而有力的声音说道：'你来到这里并非偶然，孩子。那本书选择了你，正如你选择了它。'他挥了挥法杖，周围的空气开始波动，一幅幻影在你们面前展开——那是一个充满魔法和奇迹的世界，一个你从未想象过的存在..."
+        ]
+    },
+    "simple": {
+        "format": "concise",
+        "length": "short",
+        "style": "direct",
+        "paragraphCount": 1-2,
+        "sentenceLength": "short",
+        "dialogueIncluded": false,
+        "descriptionLevel": "low",
+        "emotionalDepth": "low",
+        "pace": "fast",
+        "vocabularyLevel": "simple",
+        "examples": [
+            "你在旧书店发现了一本奇怪的书。翻开后，周围的环境开始变化。",
+            "梅林告诉你，你必须阻止暗影使者。这是你的使命。"
+        ]
+    },
+    "narrative": {
+        "format": "storytelling",
+        "length": "medium",
+        "style": "narrative",
+        "paragraphCount": 2-4,
+        "sentenceLength": "variable",
+        "dialogueIncluded": true,
+        "descriptionLevel": "medium",
+        "emotionalDepth": "medium",
+        "pace": "medium",
+        "vocabularyLevel": "balanced",
+        "examples": [
+            "那天，当你推开那扇吱呀作响的旧书店门时，命运的齿轮已经开始转动。灰尘在阳光中飞舞，空气中弥漫着陈旧纸张的味道。你在角落里发现了它——那本改变你一生的书。",
+            "'你必须做出选择，'梅林凝视着你的眼睛，'是继续你平凡的生活，还是承担起你与生俱来的责任？'你望着他，又望向窗外那个熟悉又陌生的世界，知道自己的人生再也不会和从前一样了。"
+        ]
+    },
+    "dialogue_heavy": {
+        "format": "conversational",
+        "length": "medium",
+        "style": "dialogue-focused",
+        "paragraphCount": 3-5,
+        "sentenceLength": "variable",
+        "dialogueIncluded": true,
+        "dialogueRatio": "high",
+        "descriptionLevel": "low",
+        "emotionalDepth": "medium",
+        "pace": "medium-fast",
+        "vocabularyLevel": "colloquial",
+        "examples": [
+            "'你到底是谁？'你盯着面前这个突然出现的老人，声音里带着一丝颤抖。\n'我是梅林，'他微笑着回答，'或者说，是你命运的引路人。'\n'这到底是怎么回事？那些符号，那本书...'你急切地追问。\n'慢慢来，孩子，'梅林挥了挥手，'一切都会解释清楚的。但首先，你需要相信我。'",
+            "'为什么是我？'你望着梅林，心中充满了疑惑。\n'因为你有一颗好奇的心，'他回答，'还有面对未知的勇气。这个世界需要你这样的人。'\n'我只是个普通人...'\n'普通人往往能做出最不普通的事情，'梅林打断了你，'现在，你准备好开始你的冒险了吗？'"
+        ]
+    },
+    "atmospheric": {
+        "format": "mood-focused",
+        "length": "medium",
+        "style": "atmospheric",
+        "paragraphCount": 2-4,
+        "sentenceLength": "long",
+        "dialogueIncluded": false,
+        "descriptionLevel": "very_high",
+        "emotionalDepth": "high",
+        "pace": "slow",
+        "vocabularyLevel": "literary",
+        "examples": [
+            "暮色渐沉，阴影在房间里悄然蔓延。那本书静静地躺在桌子上，封面上的符号在昏暗的光线下若隐若现，仿佛有生命一般。你能感觉到空气中弥漫着一种奇异的能量，一种既陌生又熟悉的悸动，仿佛有什么古老的秘密正在缓缓苏醒。",
+            "月光透过水晶般的树叶，在地面上投下梦幻般的光斑。远处，传来了神秘的歌声，旋律优美而忧伤，仿佛在诉说着千年的故事。你站在这个陌生的世界里，心中既害怕又兴奋，知道自己即将揭开这个世界最深处的秘密。"
+        ]
+    }
+}

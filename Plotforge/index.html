@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Plotforge 交互式小说生成器</h1>
+            <p id="story-title">选择你的故事</p>
+        </header>
+        
+        <main class="main-content">
+            <!-- 左侧预览窗口 -->
+            <div id="preview-panel" class="preview-panel">
+                <div class="preview-header">
+                    <h3>故事预览</h3>
+                    <button id="toggle-preview" class="preview-toggle">隐藏</button>
+                </div>
+                <div id="preview-content" class="preview-content">
+                    <div class="preview-info">
+                        <h4>当前进度</h4>
+                        <p id="current-chapter">未开始</p>
+                        <p id="total-chapters">总章节: 0</p>
+                    </div>
+                    <div class="preview-story-content">
+                        <h4>故事内容预览</h4>
+                        <div id="story-preview" class="story-preview">
+                            <p>暂无保存的故事内容</p>
+                        </div>
+                    </div>
+                    <div class="preview-actions">
+                        <button id="save-story" class="btn-secondary">保存故事</button>
+                        <button id="export-story" class="btn-secondary">导出故事</button>
+                    </div>
+                    <div class="preview-history">
+                        <h4>历史记录</h4>
+                        <div id="history-list" class="history-list">
+                            <!-- 历史记录将在这里显示 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主故事内容区域 -->
+            <div id="story-container" class="story-container">
+                <div id="story-intro" class="story-section">
+                    <h2>欢迎使用 Plotforge</h2>
+                    <p>这是一个基于玩家选择剧情走向的交互式小说生成器。在保证小说大致框架不变的情况下，你可以借助AI生成个性化的小说内容。</p>
+                    <button id="start-button" class="btn-primary">开始你的冒险</button>
+                </div>
+                
+                <div id="story-content" class="story-section hidden">
+                    <div id="content-display" class="content-display">
+                        <!-- 故事内容将在这里显示 -->
+                    </div>
+                    
+                    <div id="choices-container" class="choices-container">
+                        <!-- 选择选项将在这里显示 -->
+                    </div>
+                </div>
+                
+                <div id="story-loading" class="story-section hidden">
+                    <div class="loading-spinner"></div>
+                    <p>正在生成精彩内容，请稍候...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- 调试窗口（已注释但保留功能） -->
+    <div id="debug-panel" class="debug-panel" style="display: none;">
+        <div class="debug-header">
+            <h3>AI生成调试信息</h3>
+            <button id="toggle-debug" class="debug-toggle">显示</button>
+        </div>
+        <div id="debug-content" class="debug-content">
+        </div>
+    </div>
+    
+    <!-- 载入进度选择对话框 -->
+    <div id="load-progress-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>发现上一次的故事进度</h3>
+            <p>是否要载入上一次的故事进度？</p>
+            <div class="modal-buttons">
+                <button id="load-progress-yes" class="btn-primary" type="button">载入进度</button>
+                <button id="load-progress-no" class="btn-secondary" type="button">放弃并重新开始</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/config.js"></script>
+    <script src="js/story-engine.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+    "background": "在一个现代与奇幻交织的世界中，主角偶然发现了一本古老的书，从而卷入了一场跨越维度的冒险。",
+    "theme": "探索、成长、责任",
+    "tone": "神秘、紧张但充满希望",
+    "setting": {
+        "primaryWorld": "现代都市与隐藏的魔法世界交织",
+        "secondaryWorlds": ["精灵王国", "暗影维度", "古老图书馆"],
+        "keyLocations": [
+            {"name": "旧书店", "description": "主角发现神秘书籍的地方"},
+            {"name": "魔法学院", "description": "培养魔法师的秘密学府"},
+            {"name": "水晶洞穴", "description": "蕴含强大能量的神秘地点"}
+        ]
+    },
+    "conflict": {
+        "mainConflict": "主角需要阻止暗影使者获取强大的远古神器",
+        "secondaryConflicts": [
+            "主角需要在责任与平凡生活之间做出选择",
+            "主角与向导之间的信任问题"
+        ]
+    }
+}
