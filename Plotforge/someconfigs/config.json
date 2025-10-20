@@ -1,0 +1,31 @@
+{
+  "title": "神秘冒险",
+  "author": "Plotforge",
+  "version": "1.0.0",
+  "description": "一个充满未知的冒险故事",
+  "story": {
+    "initialNode": "start",
+    "autoSave": true,
+    "saveInterval": 30000,
+    "maxHistoryLength": 10
+  },
+  "ui": {
+    "loadingTimeout": 20000,
+    "fadeDuration": 300
+  },
+  "ai": {
+    "provider": "qwen-plus",
+    "apiKey": "",
+    "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+    "model": "qwen-plus",
+    "maxTokens": 16384,
+    "temperature": 1.2,
+    "topP": 0.95,
+    "topK": 6
+  },
+  "frameworkInfo": {
+    "background": "这是一个神秘的冒险故事...",
+    "theme": "未知",
+    "tone": "神秘"
+  }
+}
